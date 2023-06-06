@@ -20,3 +20,14 @@ Mappen en bestanden in /home:
 
 
 
+Mappen en bestanden in /home:
+
+[home]
+  TinyWrt.ova
+  labo10
+    [test]
+        [hallo]
+          test.txt
+
+
+

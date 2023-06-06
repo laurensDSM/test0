@@ -24,3 +24,16 @@ tmpfs                                         355M  5.2M  350M   2% /run
 /dev/mapper/rl_ptr--fqgqtpgofybqks789cz-root  6.2G  2.7G  3.6G  44% /
 /dev/sda1                                    1014M  217M  798M  22% /boot
 tmpfs                                         178M     0  178M   0% /run/user/0
+Hostnaam: rocky1
+Besturingssysteem: Linux
+Kernelversie: 5.14.0-162.6.1.el9_1.x86_64
+Gebruikersnaam: root
+Gebruiksduur: up 5 hours, 24 minutes
+Opslag:
+Filesystem                                    Size  Used Avail Use% Mounted on
+devtmpfs                                      4.0M     0  4.0M   0% /dev
+tmpfs                                         886M     0  886M   0% /dev/shm
+tmpfs                                         355M  5.2M  350M   2% /run
+/dev/mapper/rl_ptr--fqgqtpgofybqks789cz-root  6.2G  2.7G  3.6G  44% /
+/dev/sda1                                    1014M  217M  798M  22% /boot
+tmpfs                                         178M     0  178M   0% /run/user/0
