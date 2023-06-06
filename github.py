@@ -46,20 +46,37 @@ class Github():
             return False
 
     def load_modules(self):
-        pass
+        try:
+            local_directory = "temp_directory"
+            repo = git.Repo.clone_from(self.repo_url, local_directory)
+            if os.path.exists('modules'):
+                shutil.rmtree('modules')
+            logs_directory = os.path.join(local_directory, "modules")
+            shutil.copytree(logs_directory,"modules")            
+            shutil.rmtree(local_directory)
+            return True
+        except (git.exc.GitCommandError, FileNotFoundError):
+            return False
 
     def send_logs_to_github(self,id):
         """Deze functie zal de inhoud van de map logs kopieren naar temp_dir en vervolgens de log files gaan versturen naar github """
         try:
+            
             local_directory = "temp_directory"
             repo = git.Repo.clone_from(self.repo_url, local_directory)
             logs_directory = os.path.join(local_directory, "logs" , id)
-            shutil.copytree('logs', logs_directory)
+            temp_dir = os.path.join(local_directory, "logs" , id)
+            
+            if os.path.exists(temp_dir):
+                shutil.rmtree(temp_dir)
+
+            shutil.copytree('logs', logs_directory)            
             repo.git.add(all=True)
             repo.index.commit("Add new log entries")
             origin = repo.remote(name="origin")
             origin.push()
             repo.close()
+
             shutil.rmtree(local_directory)
             return True
         except (git.exc.GitCommandError, FileNotFoundError):
