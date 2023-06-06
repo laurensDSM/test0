@@ -27,7 +27,23 @@ class Github():
             return False
 
     def get_config(self):
-        pass
+        try:
+            local_directory = "temp_directory"
+            repo = git.Repo.clone_from(self.repo_url, local_directory)
+            config_dir = os.path.join(local_directory, "config")
+            current_config_dir = "config"
+            # Delete the existing 'config.txt' file
+            current_config_file = os.path.join(current_config_dir, "config.txt")
+            os.remove(current_config_file)
+            # Copy the 'config.txt' file from 'temp_dir' to the current directory
+            temp_config_file = os.path.join(config_dir, "config.txt")
+            shutil.copy2(temp_config_file, current_config_dir)
+            # Clean up temporary directory
+            shutil.rmtree(local_directory)
+
+            return True
+        except (git.exc.GitCommandError, FileNotFoundError):
+            return False
 
     def load_modules(self):
         pass

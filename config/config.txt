@@ -1,8 +1,5 @@
 [
-    {
-        "module_name": "default",
-        "class_name": "Default_module"
-    },
+
     {
         "module_name": "sysinfo",
         "class_name": "Sysinfo_module"
